@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.IO;
 
 namespace Api
 {
@@ -13,7 +14,7 @@ namespace Api
 			this.link = link;
 		}
 
-		public bool CheckResponse()
+		public Stream GetResponseStream()
 		{
 
 			try
@@ -23,45 +24,40 @@ namespace Api
 				HttpWebResponse m_response = (HttpWebResponse)m_request.GetResponse();
 
 				// Status code 200
+				Stream result = m_response.GetResponseStream();
 				m_response.Close();
-				return true;
+				return result;
 			}
 
-			// Web error - Url is not accessable (status code != 200)
-			catch (WebException)
-			{
-				return false;
-			}
-
-			// Link is not a valid url
-			// This should never happen in theory
+			// Error - f. ex. Url is not accessable (status code != 200)
 			catch (Exception)
 			{
-				return false;
+				return null;
 			}
-
 
 		}
 
 		public bool CheckUrl()
-        {
+		{
 			return this.CheckUrlDNS() || this.CheckUrlIP();
-        }
+		}
 
 		private bool CheckUrlIP()
 		{
 
 			IPAddress address;
+
 			if (IPAddress.TryParse(this.link, out address))
-            {
+			{
 				switch (address.AddressFamily)
-                {
+				{
 					case System.Net.Sockets.AddressFamily.InterNetwork:
 						return true;
 					case System.Net.Sockets.AddressFamily.InterNetworkV6:
 						return true;
-                }
-            }
+				}
+			}
+
 			return false;
 
 		}
@@ -75,13 +71,13 @@ namespace Api
 			bool pass = false;
 
 			foreach (string interf in interfaces)
-            {
+			{
 				// Does not start with interface prefix
 				if (this.link.IndexOf(interf + "://") == 0)
-                {
+				{
 					pass = true;
 					break;
-                }
+				}
 			}
 
 			if (!pass)
@@ -97,7 +93,7 @@ namespace Api
 			if (after_interface.IndexOf(".") > after_interface.IndexOf("/") && after_interface.IndexOf("/") != -1)
 				return false;
 
-			// OK
+			// OK - try it out
 			return true;
 		}
 

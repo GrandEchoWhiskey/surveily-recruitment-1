@@ -7,42 +7,42 @@ namespace Tests
     {
 
         [TestMethod]
-        public void CheckResponse_on_grandechowhiskey_github_io()
+        public void GetResponse_on_grandechowhiskey_github_io()
         {
             // Arrange
             var a = new Api.Url("https://grandechowhiskey.github.io/");
 
             // Act
-            var result = a.CheckResponse();
+            var result = a.GetResponseStream();
 
             // Assert
-            Assert.AreEqual(true, result);
+            Assert.IsNotNull(result);
         }
 
         [TestMethod]
-        public void CheckResponse_on_LocalHost_not_http_server()
+        public void GetResponse_on_LocalHost_not_http_server()
         {
             // Arrange
             var a = new Api.Url("127.0.0.1");
 
             // Act
-            var result = a.CheckResponse();
+            var result = a.GetResponseStream();
 
             // Assert
-            Assert.AreEqual(false, result);
+            Assert.IsNull(result);
         }
 
         [TestMethod]
-        public void CheckResponse_on_nonValidSite()
+        public void GetResponse_on_nonValidSite()
         {
             // Arrange
             var a = new Api.Url("https://notworkingsite.onetwo/");
 
             // Act
-            var result = a.CheckResponse();
+            var result = a.GetResponseStream();
 
             // Assert
-            Assert.AreEqual(false, result);
+            Assert.IsNull(result);
         }
 
         [TestMethod]

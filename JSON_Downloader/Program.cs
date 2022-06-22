@@ -9,10 +9,18 @@ namespace JSON_Downloader
 
 		static void Main(string[] args)
 		{
+			string[] urls;
 
-			// Get list of URLs from input & split them into urls list
-			Console.Write("Wprowadź listę adresów URL oddzielone średnikiem (;): ");
-			string[] urls = Console.ReadLine().Split(";");
+			if (args.Length == 2)
+            {
+				urls = args[1].Split(";");
+			}
+			else
+            {
+				// Get list of URLs from input & split them into urls list
+				Console.Write("Wprowadź listę adresów URL oddzielone średnikiem (;): ");
+				urls = Console.ReadLine().Split(";");
+			}
 
 			// Get target directory path
 			Console.Write("Wprowadź ścieżkę docelową: ");
@@ -26,7 +34,7 @@ namespace JSON_Downloader
 			}
 
 			Url n = new Url("https://valibyte.com");
-			if (n.CheckResponse())
+			if (n.GetResponseStream() != null)
             {
 				Console.WriteLine("OK");
             }
