@@ -1,0 +1,16 @@
+C:\Users\Eric\Projekty\recruitment-1\JSON_Downloader\bin\Debug\net5.0\JSON_Downloader.exe
+C:\Users\Eric\Projekty\recruitment-1\JSON_Downloader\bin\Debug\net5.0\JSON_Downloader.deps.json
+C:\Users\Eric\Projekty\recruitment-1\JSON_Downloader\bin\Debug\net5.0\JSON_Downloader.runtimeconfig.json
+C:\Users\Eric\Projekty\recruitment-1\JSON_Downloader\bin\Debug\net5.0\JSON_Downloader.runtimeconfig.dev.json
+C:\Users\Eric\Projekty\recruitment-1\JSON_Downloader\bin\Debug\net5.0\JSON_Downloader.dll
+C:\Users\Eric\Projekty\recruitment-1\JSON_Downloader\bin\Debug\net5.0\JSON_Downloader.pdb
+C:\Users\Eric\Projekty\recruitment-1\JSON_Downloader\obj\Debug\net5.0\JSON_Downloader.csproj.AssemblyReference.cache
+C:\Users\Eric\Projekty\recruitment-1\JSON_Downloader\obj\Debug\net5.0\JSON_Downloader.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Eric\Projekty\recruitment-1\JSON_Downloader\obj\Debug\net5.0\JSON_Downloader.AssemblyInfoInputs.cache
+C:\Users\Eric\Projekty\recruitment-1\JSON_Downloader\obj\Debug\net5.0\JSON_Downloader.AssemblyInfo.cs
+C:\Users\Eric\Projekty\recruitment-1\JSON_Downloader\obj\Debug\net5.0\JSON_Downloader.csproj.CoreCompileInputs.cache
+C:\Users\Eric\Projekty\recruitment-1\JSON_Downloader\obj\Debug\net5.0\JSON_Downloader.dll
+C:\Users\Eric\Projekty\recruitment-1\JSON_Downloader\obj\Debug\net5.0\refint\JSON_Downloader.dll
+C:\Users\Eric\Projekty\recruitment-1\JSON_Downloader\obj\Debug\net5.0\JSON_Downloader.pdb
+C:\Users\Eric\Projekty\recruitment-1\JSON_Downloader\obj\Debug\net5.0\JSON_Downloader.genruntimeconfig.cache
+C:\Users\Eric\Projekty\recruitment-1\JSON_Downloader\obj\Debug\net5.0\ref\JSON_Downloader.dll

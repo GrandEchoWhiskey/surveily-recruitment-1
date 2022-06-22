@@ -1,6 +1,6 @@
-[x] Przyjęcie listy adresów URL na wejściu oddzielonych średnikiem,
-[ ] Przyjęcie folderu docelowego, na zapisanie wyników pracy,
-[ ] Weryfikacja czy zadane adresy są prawdziwymi URL,
-[x] Weryfikacja czy zadane adresy istnieją w sieci,
-[ ] Pobranie danych,
-[ ] Zapis pobranych danych w folderze docelowym.
+- [x] Przyjęcie listy adresów URL na wejściu oddzielonych średnikiem,
+- [ ] Przyjęcie folderu docelowego, na zapisanie wyników pracy,
+- [x] Weryfikacja czy zadane adresy są prawdziwymi URL,
+- [x] Weryfikacja czy zadane adresy istnieją w sieci,
+- [ ] Pobranie danych,
+- [ ] Zapis pobranych danych w folderze docelowym.

@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "JSON_Downloader/1.0.0": {
+        "runtime": {
+          "JSON_Downloader.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "JSON_Downloader/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
