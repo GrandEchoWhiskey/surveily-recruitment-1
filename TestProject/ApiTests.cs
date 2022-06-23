@@ -48,6 +48,8 @@ namespace Tests
 			Assert.AreEqual(false, result);
 		}
 
+		// Url Interface checks in [https, http, ftp]
+
 		[TestMethod]
 		public void Check_on_interface()
 		{
@@ -67,6 +69,8 @@ namespace Tests
 
 			Assert.AreEqual(false, result);
 		}
+
+		// Url ping tests with numeric and DNS translation
 
 		[TestMethod]
 		public void Check_on_ping_8_8_8_8()
@@ -93,6 +97,8 @@ namespace Tests
 	[TestClass]
 	public class DownloaderTests
 	{
+
+		// Download tests
 
 		[TestMethod]
 		public void Check_on_Download()
@@ -138,9 +144,12 @@ namespace Tests
 			Assert.AreEqual(false, result);
 		}
 
+		// Stream and Connection open tests
+
 		[TestMethod]
 		public void Check_on_FileNotOpen()
 		{
+			// Wrong Path missing ':' after Disk letter.
 			var full_path = "C\\Users\\" + System.Environment.UserName + "\\AppData\\Local\\Temp\\test.json";
 			var url = "https://grandechowhiskey.github.io/testJson.json";
 			var myDl = new Api.MyDownloader(url, full_path);
@@ -172,6 +181,8 @@ namespace Tests
 	public class ControllerTests
 	{
 
+		// Single Thread test
+
 		[TestMethod]
 		public void Check_on_DownloadingThread()
 		{
@@ -190,6 +201,52 @@ namespace Tests
 				Assert.Fail();
             }
 		}
+
+		// Multi Thread test
+
+        [TestMethod]
+		public void Check_on_DownloadMultiThread()
+        {
+			var path = System.IO.Path.GetTempPath();
+			var urls = "https://grandechowhiskey.github.io/testJson.json;" +
+                "https://grandechowhiskey.github.io/testJson.json";
+
+			Api.Controller.StartDownloading(urls.Split(';'), path, false);
+
+			try
+			{
+				System.IO.File.Delete(path + "download_1.json");
+				System.IO.File.Delete(path + "download_2.json");
+			}
+			catch (System.Exception)
+			{
+				Assert.Fail();
+			}
+
+		}
+
+		// Get orginal filename
+
+        [TestMethod]
+		public void Check_on_getOrginalName()
+        {
+			var url = "https://testsite.io/test.json";
+
+			var result = Api.Controller.getName(url);
+
+			Assert.IsNotNull(result);
+		}
+
+		[TestMethod]
+		public void Check_on_getWrongOrginalName()
+		{
+			var url = "https://testsite.io/test.jsn";
+
+			var result = Api.Controller.getName(url);
+
+			Assert.IsNull(result);
+		}
+
 	}
 
 }

@@ -96,6 +96,7 @@ namespace Api
 
 		private void close_Connection()
         {
+			if (!this.Connected) return;
 			try
             {
 				this._response.Close();
@@ -105,6 +106,7 @@ namespace Api
 
 		private void close_File()
         {
+			if (!this.FileOpen) return;
 			try
             {
 				this._fstream.Close();

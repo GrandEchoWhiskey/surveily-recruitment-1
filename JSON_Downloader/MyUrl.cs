@@ -50,7 +50,7 @@ namespace Api
 			try
 			{
 				
-				Ping ping = new Ping();
+				Ping ping = new ();
 				PingReply result = ping.Send(address);
 				if (result.Status == IPStatus.Success)
 				{
