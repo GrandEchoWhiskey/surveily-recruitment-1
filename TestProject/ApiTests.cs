@@ -2,113 +2,194 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests
 {
-    [TestClass]
-    public class ApiTests
-    {
+	[TestClass]
+	public class UrlTests
+	{
 
-        [TestMethod]
-        public void GetResponse_on_grandechowhiskey_github_io()
-        {
-            // Arrange
-            var a = new Api.Url("https://grandechowhiskey.github.io/");
+		// Url IP checks
 
-            // Act
-            var result = a.GetResponseStream();
+		[TestMethod]
+		public void Check_on_isIPv6()
+		{
+			var url = new Api.MyUrl("2001:0db8:85a3::8a2e:0370:7334");
 
-            // Assert
-            Assert.IsNotNull(result);
-        }
+			var result = url.is_UrlIP();
 
-        [TestMethod]
-        public void GetResponse_on_LocalHost_not_http_server()
-        {
-            // Arrange
-            var a = new Api.Url("127.0.0.1");
+			Assert.AreEqual(true, result);
+		}
 
-            // Act
-            var result = a.GetResponseStream();
+		[TestMethod]
+		public void Check_on_isNotIPv6()
+		{
+			var url = new Api.MyUrl("2001:0db8:85a3:0000:0000:8ak2e::734");
 
-            // Assert
-            Assert.IsNull(result);
-        }
+			var result = url.is_UrlIP();
 
-        [TestMethod]
-        public void GetResponse_on_nonValidSite()
-        {
-            // Arrange
-            var a = new Api.Url("https://notworkingsite.onetwo/");
+			Assert.AreEqual(false, result);
+		}
 
-            // Act
-            var result = a.GetResponseStream();
+		[TestMethod]
+		public void Check_on_isIPv4()
+		{
+			var url = new Api.MyUrl("127.0.0.1");
 
-            // Assert
-            Assert.IsNull(result);
-        }
+			var result = url.is_UrlIP();
 
-        [TestMethod]
-        public void CheckName_on_ValidName()
-        {
-            // Arrange
-            var a = new Api.Url("https://somedomain.net/");
+			Assert.AreEqual(true, result);
+		}
 
-            // Act
-            var result = a.CheckUrl();
+		[TestMethod]
+		public void Check_on_isNotIPv4()
+		{
+			var url = new Api.MyUrl("127.156.112.256");
 
-            // Assert
-            Assert.AreEqual(true, result);
-        }
+			var result = url.is_UrlIP();
 
-        [TestMethod]
-        public void CheckName_on_InvalidName()
-        {
-            // Arrange
-            var a = new Api.Url("https://somedomain/.net");
+			Assert.AreEqual(false, result);
+		}
 
-            // Act
-            var result = a.CheckUrl();
+		[TestMethod]
+		public void Check_on_interface()
+		{
+			var url = new Api.MyUrl("https://somesite.com");
 
-            // Assert
-            Assert.AreEqual(false, result);
-        }
+			var result = url.is_UrlInterface();
 
-        [TestMethod]
-        public void CheckName_on_InvalidInterface()
-        {
-            // Arrange
-            var a = new Api.Url("htt://somedomain.net/");
+			Assert.AreEqual(true, result);
+		}
 
-            // Act
-            var result = a.CheckUrl();
+		[TestMethod]
+		public void Check_on_notInterface()
+		{
+			var url = new Api.MyUrl("ssl://somesite.com");
 
-            // Assert
-            Assert.AreEqual(false, result);
-        }
+			var result = url.is_UrlInterface();
 
-        [TestMethod]
-        public void CheckName_on_LocalHost_ip()
-        {
-            // Arrange
-            var a = new Api.Url("127.0.0.1");
+			Assert.AreEqual(false, result);
+		}
 
-            // Act
-            var result = a.CheckUrl();
+		[TestMethod]
+		public void Check_on_ping_8_8_8_8()
+		{
+			var url = new Api.MyUrl("8.8.8.8");
 
-            // Assert
-            Assert.AreEqual(true, result);
-        }
+			var result = url.is_UrlPing();
 
-        [TestMethod]
-        public void CheckName_on_Invalid_ip()
-        {
-            // Arrange
-            var a = new Api.Url("364.0.0.1");
+			Assert.AreEqual(true, result);
+		}
 
-            // Act
-            var result = a.CheckUrl();
+		[TestMethod]
+		public void Check_on_ping_portfolio()
+		{
+			var url = new Api.MyUrl("https://grandechowhiskey.github.io");
 
-            // Assert
-            Assert.AreEqual(false, result);
-        }
+			var result = url.is_UrlPing();
 
-    }
+			Assert.AreEqual(true, result);
+		}
+
+	}
+
+	[TestClass]
+	public class DownloaderTests
+	{
+
+		[TestMethod]
+		public void Check_on_Download()
+		{
+			var full_path = System.IO.Path.GetTempPath() + "test.json";
+			var url = "https://grandechowhiskey.github.io/testJson.json";
+			var myDl = new Api.MyDownloader(url, full_path);
+
+			var result = myDl.download();
+
+			myDl.Close();
+			System.IO.File.Delete(myDl.Path);
+
+			Assert.AreEqual(true, result);
+		}
+
+		[TestMethod]
+		public void Check_on_Download_errorCode()
+		{
+			var full_path = System.IO.Path.GetTempPath() + "test.json";
+			var url = "https://grandechowhiskey.github.io/testJson.jsons";
+			var myDl = new Api.MyDownloader(url, full_path);
+
+			var result = myDl.download();
+
+			myDl.Close();
+			System.IO.File.Delete(myDl.Path);
+
+			Assert.AreEqual(false, result);
+		}
+
+		[TestMethod]
+		public void Check_on_Download_errorSave()
+		{
+			var full_path = "C\\Users\\" + System.Environment.UserName + "\\AppData\\Local\\Temp\\test.json";
+			var url = "https://grandechowhiskey.github.io/testJson.json";
+			var myDl = new Api.MyDownloader(url, full_path);
+
+			var result = myDl.download();
+
+			myDl.Close();
+
+			Assert.AreEqual(false, result);
+		}
+
+		[TestMethod]
+		public void Check_on_FileNotOpen()
+		{
+			var full_path = "C\\Users\\" + System.Environment.UserName + "\\AppData\\Local\\Temp\\test.json";
+			var url = "https://grandechowhiskey.github.io/testJson.json";
+			var myDl = new Api.MyDownloader(url, full_path);
+
+			var result = myDl.FileOpen;
+
+			myDl.Close();
+
+			Assert.AreEqual(false, result);
+		}
+
+		[TestMethod]
+		public void Check_on_ErrorCode()
+		{
+			var full_path = System.IO.Path.GetTempPath() + "test.json";
+			var url = "https://grandechowhiskey.github.io/testJson.jsons";
+			var myDl = new Api.MyDownloader(url, full_path);
+
+			var result = myDl.Connected;
+
+			myDl.Close();
+
+			Assert.AreEqual(false, result);
+		}
+
+	}
+
+	[TestClass]
+	public class ControllerTests
+	{
+
+		[TestMethod]
+		public void Check_on_DownloadingThread()
+		{
+			var path = System.IO.Path.GetTempPath();
+			var url = "https://grandechowhiskey.github.io/testJson.json";
+			var name = "test.json";
+
+			Api.Controller.checkAndDownload(url, path, name);
+
+			try
+            {
+				System.IO.File.Delete(path + name);
+            }
+			catch (System.Exception)
+            {
+				Assert.Fail();
+            }
+		}
+	}
+
 }

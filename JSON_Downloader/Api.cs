@@ -1,103 +1,68 @@
 ﻿using System;
-using System.Net;
-using System.IO;
+using System.Threading;
 
 namespace Api
 {
-	public class Url
+	public class Controller
 	{
-
-		private string link;
-
-		public Url(string link)
-		{
-			this.link = link;
-		}
-
-		public Stream GetResponseStream()
+		public static void checkAndDownload(string url, string path, string name)
 		{
 
-			try
+			MyUrl m_url = new MyUrl(url);
+
+			if (!m_url.is_UrlInterface() && !m_url.is_UrlIP())
 			{
-				// Create Request and get a Response
-				HttpWebRequest m_request = (HttpWebRequest)WebRequest.Create(this.link);
-				HttpWebResponse m_response = (HttpWebResponse)m_request.GetResponse();
-
-				// Status code 200
-				Stream result = m_response.GetResponseStream();
-				m_response.Close();
-				return result;
+				Console.WriteLine("Podany adres: " + url + " nie może zostać odczytany.");
+				return;
 			}
 
-			// Error - f. ex. Url is not accessable (status code != 200)
-			catch (Exception)
+			if (!m_url.is_UrlPing())
 			{
-				return null;
+				Console.WriteLine("Podany adres: " + url + " nie odpowiada.");
+				return;
 			}
 
-		}
+			MyDownloader m_dl = new MyDownloader(m_url.Url, path + name);
 
-		public bool CheckUrl()
-		{
-			return this.CheckUrlDNS() || this.CheckUrlIP();
-		}
+			if (!m_dl.Connected)
+            {
+				Console.WriteLine("Brak dostępu do: " + url + " lub adres nie odpowiada.");
+				m_dl.Close();
+				return;
+            }
 
-		private bool CheckUrlIP()
-		{
+			if (!m_dl.FileOpen)
+            {
+				Console.WriteLine("Plik nie może zostać zapisany: " + path + name);
+				m_dl.Close();
+				return;
+            }
 
-			IPAddress address;
-
-			if (IPAddress.TryParse(this.link, out address))
-			{
-				switch (address.AddressFamily)
-				{
-					case System.Net.Sockets.AddressFamily.InterNetwork:
-						return true;
-					case System.Net.Sockets.AddressFamily.InterNetworkV6:
-						return true;
-				}
+			if (!m_dl.download())
+            {
+				Console.WriteLine("Błąd konwersji: " + path + name);
+				m_dl.Close();
+				return;
 			}
 
-			return false;
+			Console.WriteLine("Plik zapisany: " + path + name);
+			m_dl.Close();
 
 		}
 
-		private bool CheckUrlDNS()
+		public static void StartDownloading(string[] urls, string path)
 		{
-
-			// Valid interface list
-			string[] interfaces = {"https", "http"};
-
-			bool pass = false;
-
-			foreach (string interf in interfaces)
+			path = path[path.Length-1] == '\\' ? path : path + '\\';
+			for (int i=0; i<urls.Length; i++)
 			{
-				// Does not start with interface prefix
-				if (this.link.IndexOf(interf + "://") == 0)
-				{
-					pass = true;
-					break;
-				}
+				string url = urls[i];
+				string name = "download_" + (i+1).ToString() + ".json";
+				ThreadStart child = new ThreadStart(() => checkAndDownload(url, path, name));
+				Thread ct = new Thread(child);
+				ct.Start();
 			}
-
-			if (!pass)
-				return false;
-
-			string after_interface = this.link.Split("://")[1];
-
-			// Must contain dot (domain.com for example)
-			if (after_interface.IndexOf(".") == -1)
-				return false;
-
-			// Subsite can't come before domain
-			if (after_interface.IndexOf(".") > after_interface.IndexOf("/") && after_interface.IndexOf("/") != -1)
-				return false;
-
-			// OK - try it out
-			return true;
 		}
 
-		public string Link { get { return this.link; } }
 	}
 }
 

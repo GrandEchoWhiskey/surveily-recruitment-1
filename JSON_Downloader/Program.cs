@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using Api;
 
 namespace JSON_Downloader
@@ -9,39 +8,21 @@ namespace JSON_Downloader
 
 		static void Main(string[] args)
 		{
-			string[] urls;
-
+			string urls;
 			if (args.Length == 2)
             {
-				urls = args[1].Split(";");
-			}
-			else
-            {
-				// Get list of URLs from input & split them into urls list
-				Console.Write("Wprowadź listę adresów URL oddzielone średnikiem (;): ");
-				urls = Console.ReadLine().Split(";");
-			}
-
-			// Get target directory path
-			Console.Write("Wprowadź ścieżkę docelową: ");
-			string dir = Console.ReadLine();
-
-			// Loop urls
-			for (int i = 0; i < urls.Length; i++)
-			{
-				string current_url = urls[i];
-                Console.WriteLine(current_url);
-			}
-
-			Url n = new Url("https://valibyte.com");
-			if (n.GetResponseStream() != null)
-            {
-				Console.WriteLine("OK");
+				urls = args[1];
             }
 			else
             {
-				Console.WriteLine("Error");
-			}
+				Console.Write("Wpisz adresy URL oddzielone średnikiem: ");
+				urls = Console.ReadLine();
+            }
+			Console.Write("Wpisz ścieżkę zapisu: ");
+			string dir = Console.ReadLine();
+
+			string[] list = urls.Split(';');
+			Api.Controller.StartDownloading(list, dir);
 		}
 	}
 }
