@@ -5,6 +5,9 @@ namespace Api
 {
 	public class Controller
 	{
+
+		const bool USE_REAL_FILE_NAME = true;
+
 		public static void checkAndDownload(string url, string path, string name)
 		{
 
@@ -56,7 +59,24 @@ namespace Api
 			for (int i=0; i<urls.Length; i++)
 			{
 				string url = urls[i];
-				string name = "download_" + (i+1).ToString() + ".json";
+				string name;
+
+                try
+                {
+					if (url.Contains(".json") && url.Contains("/") && USE_REAL_FILE_NAME)
+					{
+						string[] temp = url.Split("/");
+						string t = temp[temp.Length - 1];
+						t = t.Split(".json")[0];
+						name = t + ".json";
+					}
+					else { throw new Exception(); }
+                }
+                catch (Exception)
+				{
+					name = "download_" + (i + 1).ToString() + ".json";
+				}
+
 				ThreadStart child = new ThreadStart(() => checkAndDownload(url, path, name));
 				Thread ct = new Thread(child);
 				ct.Start();
