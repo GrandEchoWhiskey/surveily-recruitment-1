@@ -270,23 +270,16 @@ namespace ApiTester
 		// Get orginal filename
 
         [TestMethod]
-		public void Check_on_getOrginalName()
+		public void Check_on_getName()
         {
-			var url = "https://testsite.io/test.json";
+			var url1 = "https://testsite.io/test.json";
+			var url2 = "https://testsite.io/test.jsn";
 
-			var result = Api.Controller.getName(url);
+			var result1 = Api.Controller.getName(url);
+			var result2 = Api.Controller.getName(url);
 
-			Assert.IsNotNull(result);
-		}
-
-		[TestMethod]
-		public void Check_on_getWrongOrginalName()
-		{
-			var url = "https://testsite.io/test.jsn";
-
-			var result = Api.Controller.getName(url);
-
-			Assert.IsNull(result);
+			Assert.IsNotNull(result1);
+			Assert.IsNull(result2);
 		}
 
 	}

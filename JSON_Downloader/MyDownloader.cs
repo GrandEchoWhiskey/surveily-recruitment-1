@@ -103,6 +103,7 @@ namespace Api
 				this._response.Close();
             }
 			catch (Exception) { }
+			this._response = null;
 		}
 
 		private void close_File()
@@ -113,6 +114,7 @@ namespace Api
 				this._fstream.Close();
 			}
 			catch(Exception) { }
+			this._fstream = null;
         }
 
 		public string Url { get { return _url; } }
