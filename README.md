@@ -75,6 +75,12 @@ else
   urls = Console.ReadLine();
 }
 ```
+Istnieje również możliwość prostej zmiany nazwy pliku; domyślnie nazwa pliku jest taka sama jak nazwa pliku z URL, jednak wystarczy inaczej wywołać metodę aby pliki zapisywane były w postaci "download_{index}.json".
+```csharp
+string name = getName(url);
+if (name == null || !use_real_file_name)
+  name = "download_" + (i + 1).ToString() + ".json";
+```
 
 #### Działanie:
 Poniższy kod tworzy kopię danych ze strony internetowej i zapisuje w podanym pliku. Użyłem metody (StreamReader)ReadToEnd(), która na chwilę przechowuje wszystkie dane z danej strony w pamięci.
