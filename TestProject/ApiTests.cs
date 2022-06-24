@@ -31,7 +31,7 @@ namespace Tests
 		[TestMethod]
 		public void Check_on_isIPv4()
 		{
-			var url = new Api.MyUrl("127.0.0.1");
+			var url = new Api.MyUrl("https://127.0.0.1/data.json");
 
 			var result = url.is_UrlIP();
 

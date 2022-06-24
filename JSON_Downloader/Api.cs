@@ -94,7 +94,7 @@ namespace Api
 				
 				// Run new thread and add to list
 				ThreadStart thread_start = new (() => checkAndDownload(url, path, name));
-				Thread thread = new(thread_start)
+				Thread thread = new (thread_start)
 				{
 					Name = name,
 					Priority = ThreadPriority.AboveNormal

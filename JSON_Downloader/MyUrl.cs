@@ -18,8 +18,20 @@ namespace Api
 		{
 			try
 			{
+				string url = this._url;
+
+				if(url.Contains("://"))
+                {
+					url = url.Split("://")[1];
+                }
+
+				if(url.Contains("/"))
+                {
+					url = url.Split("/")[0];
+                }
+
 				IPAddress address;
-				if (IPAddress.TryParse(this._url, out address))
+				if (IPAddress.TryParse(url, out address))
 				{
 					switch (address.AddressFamily)
 					{
