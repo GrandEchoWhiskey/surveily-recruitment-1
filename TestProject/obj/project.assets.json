@@ -6230,9 +6230,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Eric\\Projekty\\surveily-recruitment-1\\TestProject\\TestProject.csproj",
-      "projectName": "TestProject",
-      "projectPath": "C:\\Users\\Eric\\Projekty\\surveily-recruitment-1\\TestProject\\TestProject.csproj",
+      "projectUniqueName": "C:\\Users\\Eric\\Projekty\\surveily-recruitment-1\\TestProject\\Test_JSON_Downloader.csproj",
+      "projectName": "Test_JSON_Downloader",
+      "projectPath": "C:\\Users\\Eric\\Projekty\\surveily-recruitment-1\\TestProject\\Test_JSON_Downloader.csproj",
       "packagesPath": "C:\\Users\\Eric\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Eric\\Projekty\\surveily-recruitment-1\\TestProject\\obj\\",
       "projectStyle": "PackageReference",

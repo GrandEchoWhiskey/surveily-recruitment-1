@@ -1,101 +1,143 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Tests
+namespace ApiTester
 {
 	[TestClass]
-	public class UrlTests
+	public class Url
 	{
 
 		// Url IP checks
 
 		[TestMethod]
-		public void Check_on_isIPv6()
+		public void Check_on_IPv6()
 		{
-			var url = new Api.MyUrl("2001:0db8:85a3::8a2e:0370:7334");
 
-			var result = url.is_UrlIP();
+			string[] urls_working =
+			{
+				"2001:0db8:85a3::8a2e:0370:7334",
+				"http://2001:0db8::8a2e:0370:7334",
+				"https://2001:0db8::0370:7334/test.json"
+			};
 
-			Assert.AreEqual(true, result);
+			string[] urls_notWorking =
+			{
+				"2001:0db8:85a3:::8a2e:0370:7334",
+				"http://2001:vdb8:85a3::8a2e:0370:7334",
+				"https://2001:vdb8:85a3::8a2e:0370:7334/test.json"
+			};
+
+			foreach (string url in urls_working)
+            {
+				var api_url = new Api.MyUrl(url);
+				var result = api_url.is_UrlIP();
+				Assert.IsTrue(result);
+            }
+
+			foreach (string url in urls_notWorking)
+            {
+				var api_url = new Api.MyUrl(url);
+				var result = api_url.is_UrlIP();
+				Assert.IsFalse(result);
+			}
+
 		}
 
 		[TestMethod]
-		public void Check_on_isNotIPv6()
+		public void Check_on_IPv4()
 		{
-			var url = new Api.MyUrl("2001:0db8:85a3:0000:0000:8ak2e::734");
 
-			var result = url.is_UrlIP();
+			string[] urls_working =
+			{
+				"192.168.0.1",
+				"http://127.23.0.250",
+				"https://127.0.0.1/data.json"
+			};
 
-			Assert.AreEqual(false, result);
-		}
+			string[] urls_notWorking =
+			{
+				"192.168.0.256",
+				"http://127.23.0.256",
+				"https://192.168.0.256/data.json"
+			};
 
-		[TestMethod]
-		public void Check_on_isIPv4()
-		{
-			var url = new Api.MyUrl("https://127.0.0.1/data.json");
+			foreach (string url in urls_working)
+			{
+				var api_url = new Api.MyUrl(url);
+				var result = api_url.is_UrlIP();
+				Assert.IsTrue(result);
+			}
 
-			var result = url.is_UrlIP();
+			foreach (string url in urls_notWorking)
+			{
+				var api_url = new Api.MyUrl(url);
+				var result = api_url.is_UrlIP();
+				Assert.IsFalse(result);
+			}
 
-			Assert.AreEqual(true, result);
-		}
-
-		[TestMethod]
-		public void Check_on_isNotIPv4()
-		{
-			var url = new Api.MyUrl("127.156.112.256");
-
-			var result = url.is_UrlIP();
-
-			Assert.AreEqual(false, result);
 		}
 
 		// Url Interface checks in [https, http, ftp]
 
 		[TestMethod]
-		public void Check_on_interface()
+		public void Check_on_Interface()
 		{
-			var url = new Api.MyUrl("https://somesite.com");
 
-			var result = url.is_UrlInterface();
+			string[] urls_working =
+			{
+				"ftp://192.168.0.1",
+				"http://127.23.0.250",
+				"https://127.0.0.1/data.json"
+			};
 
-			Assert.AreEqual(true, result);
-		}
+			string[] urls_notWorking =
+			{
+				"ssl://192.168.0.1",
+				"http:/127.23.0.250",
+				"https//127.0.0.1/data.json"
+			};
 
-		[TestMethod]
-		public void Check_on_notInterface()
-		{
-			var url = new Api.MyUrl("ssl://somesite.com");
+			foreach (string url in urls_working)
+			{
+				var api_url = new Api.MyUrl(url);
+				var result = api_url.is_UrlInterface();
+				Assert.IsTrue(result);
+			}
 
-			var result = url.is_UrlInterface();
+			foreach (string url in urls_notWorking)
+			{
+				var api_url = new Api.MyUrl(url);
+				var result = api_url.is_UrlInterface();
+				Assert.IsFalse(result);
+			}
 
-			Assert.AreEqual(false, result);
 		}
 
 		// Url ping tests with numeric and DNS translation
 
 		[TestMethod]
-		public void Check_on_ping_8_8_8_8()
+		public void Check_on_Ping()
 		{
-			var url = new Api.MyUrl("8.8.8.8");
 
-			var result = url.is_UrlPing();
+			string[] urls_working =
+			{
+				"8.8.8.8",
+				"https://grandechowhiskey.github.io",
+				"https://127.0.0.1/data.json"
+			};
 
-			Assert.AreEqual(true, result);
-		}
+			foreach (string url in urls_working)
+			{
+				var api_url = new Api.MyUrl(url);
+				var result = api_url.is_UrlPing();
+				Assert.IsTrue(result);
+			}
 
-		[TestMethod]
-		public void Check_on_ping_portfolio()
-		{
-			var url = new Api.MyUrl("https://grandechowhiskey.github.io");
-
-			var result = url.is_UrlPing();
-
-			Assert.AreEqual(true, result);
 		}
 
 	}
 
 	[TestClass]
-	public class DownloaderTests
+	public class Downloader
 	{
 
 		// Download tests
@@ -178,7 +220,7 @@ namespace Tests
 	}
 
 	[TestClass]
-	public class ControllerTests
+	public class Controller
 	{
 
 		// Single Thread test

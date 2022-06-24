@@ -5,7 +5,7 @@ VisualStudioVersion = 17.2.32602.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JSON_Downloader", "JSON_Downloader.csproj", "{228D6E89-E0F6-4ED4-9CE8-3E2E69D28DE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "..\TestProject\TestProject.csproj", "{744500DD-2ECB-4A68-9D6F-ABFF995EB537}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test_JSON_Downloader", "..\TestProject\Test_JSON_Downloader.csproj", "{744500DD-2ECB-4A68-9D6F-ABFF995EB537}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

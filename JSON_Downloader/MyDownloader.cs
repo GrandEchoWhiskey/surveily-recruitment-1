@@ -59,6 +59,7 @@ namespace Api
 
 			try
             {
+				// Copy bytes from respone stream to file stream
 				byte[] data_byte_array = new UTF8Encoding(true).GetBytes(stream_reader.ReadToEnd());
 				this._fstream.Write(data_byte_array, 0, data_byte_array.Length);
 			}
