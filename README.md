@@ -1,5 +1,7 @@
 ###### Language: Polish &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Framework: .NET 5.0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Programming Language: C#
 
+[![](https://img.icons8.com/color/25/000000/c-sharp-logo.png)](#)
+
 Projekt aplikacji konsolowej w .NET 5.0, która w najoptymalniejszy sposób dla danej maszyny pobierze dane JSON z adresów URL zadanych na stdin.
 Zaprojektowane klasy i testy jednostkowe.
 
