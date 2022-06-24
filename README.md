@@ -25,7 +25,7 @@ threadlist.Add(thread);
 ```
 
 #### Przyjazna dla użytkownika:
-Nie byłem pewien jak zrozumieć `stdin` więc program ma możliwość wprowadzenia adresów przez przekazanie argumentów jak i przez konsolę.
+Program ma możliwość wprowadzenia adresów poprzez przekazanie argumentów jak i przez konsolę.
 ```csharp
 string urls;
 if (args.Length == 2)
