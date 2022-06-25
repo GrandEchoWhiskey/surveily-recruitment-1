@@ -183,6 +183,9 @@ namespace ApiTester
 
 			myDl.Close();
 
+			// Below Remove method will do nothing in this case
+			myDl.Remove();
+
 			Assert.AreEqual(false, result);
 		}
 
