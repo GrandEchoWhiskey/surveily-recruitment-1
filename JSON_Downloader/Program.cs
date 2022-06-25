@@ -24,9 +24,13 @@ namespace JSON_Downloader
 			Console.Write("Wpisz ścieżkę zapisu: ");
 			string dir = Console.ReadLine();
 
+			// Get orginal names
+			Console.Write("Używaj orginalnej nazwy pliku (t/n): ");
+			bool orginal_names = Console.ReadLine() != "n";
+
 			// Prepare list and download data
 			string[] list = urls.Split(';');
-			Api.Controller.StartDownloading(list, dir);
+			Api.Controller.StartDownloading(list, dir, orginal_names);
 		}
 	}
 }

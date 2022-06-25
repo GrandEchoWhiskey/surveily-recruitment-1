@@ -7,14 +7,14 @@ namespace Api
 	public class Controller
 	{
 
-		public static string getName(string url)
+		public static string GetName(string url)
         {
 			try
 			{
 				if (url.Contains(".json") && url.Contains("/"))
 				{
 					string[] temp = url.Split("/");
-					string t = temp[temp.Length - 1];
+					string t = temp[^1];
 					t = t.Split(".json")[0];
 					return t + ".json";
 				}
@@ -26,19 +26,19 @@ namespace Api
 			}
 		}
 
-		public static void checkAndDownload(string url, string path, string name)
+		public static void CheckAndDownload(string url, string path, string name)
 		{
 
 			// Create MyUrl object and try to pass tests
 			MyUrl m_url = new (url);
 
-			if (!m_url.is_UrlInterface() && !m_url.is_UrlIP())
+			if (!m_url.Is_UrlInterface() && !m_url.Is_UrlIP())
 			{
 				Console.WriteLine("Podany adres: " + url + " nie może zostać odczytany.");
 				return;
 			}
 
-			if (!m_url.is_UrlPing())
+			if (!m_url.Is_UrlPing())
 			{
 				Console.WriteLine("Podany adres: " + url + " nie odpowiada.");
 				return;
@@ -51,6 +51,7 @@ namespace Api
             {
 				Console.WriteLine("Brak dostępu do: " + url + " lub adres nie odpowiada.");
 				m_dl.Close();
+				m_dl.Remove();
 				return;
             }
 
@@ -58,14 +59,16 @@ namespace Api
             {
 				Console.WriteLine("Plik nie może zostać zapisany: " + path + name);
 				m_dl.Close();
+				m_dl.Remove();
 				return;
             }
 
 			// Try to download
-			if (!m_dl.download())
+			if (!m_dl.Download())
             {
 				Console.WriteLine("Błąd konwersji: " + path + name);
 				m_dl.Close();
+				m_dl.Remove();
 				return;
 			}
 
@@ -80,7 +83,7 @@ namespace Api
 			List<Thread> threadlist = new ();
 
 			// Add end slash if missing
-			path = path[path.Length-1] == '\\' ? path : path + '\\';
+			path = path[^1] == '\\' ? path : path + '\\';
 
 			for (int i=0; i<urls.Length; i++)
 			{
@@ -88,12 +91,12 @@ namespace Api
 
 				// Get orginal name if possible & use_real_file_name=true
 				// else name: download_{index}.json
-				string name = getName(url);
+				string name = GetName(url);
 				if (name == null || !use_real_file_name)
 					name = "download_" + (i + 1).ToString() + ".json";
 				
 				// Run new thread and add to list
-				ThreadStart thread_start = new (() => checkAndDownload(url, path, name));
+				ThreadStart thread_start = new (() => CheckAndDownload(url, path, name));
 				Thread thread = new (thread_start)
 				{
 					Name = name,

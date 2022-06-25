@@ -29,14 +29,14 @@ namespace ApiTester
 			foreach (string url in urls_working)
             {
 				var api_url = new Api.MyUrl(url);
-				var result = api_url.is_UrlIP();
+				var result = api_url.Is_UrlIP();
 				Assert.IsTrue(result);
             }
 
 			foreach (string url in urls_notWorking)
             {
 				var api_url = new Api.MyUrl(url);
-				var result = api_url.is_UrlIP();
+				var result = api_url.Is_UrlIP();
 				Assert.IsFalse(result);
 			}
 
@@ -63,14 +63,14 @@ namespace ApiTester
 			foreach (string url in urls_working)
 			{
 				var api_url = new Api.MyUrl(url);
-				var result = api_url.is_UrlIP();
+				var result = api_url.Is_UrlIP();
 				Assert.IsTrue(result);
 			}
 
 			foreach (string url in urls_notWorking)
 			{
 				var api_url = new Api.MyUrl(url);
-				var result = api_url.is_UrlIP();
+				var result = api_url.Is_UrlIP();
 				Assert.IsFalse(result);
 			}
 
@@ -99,14 +99,14 @@ namespace ApiTester
 			foreach (string url in urls_working)
 			{
 				var api_url = new Api.MyUrl(url);
-				var result = api_url.is_UrlInterface();
+				var result = api_url.Is_UrlInterface();
 				Assert.IsTrue(result);
 			}
 
 			foreach (string url in urls_notWorking)
 			{
 				var api_url = new Api.MyUrl(url);
-				var result = api_url.is_UrlInterface();
+				var result = api_url.Is_UrlInterface();
 				Assert.IsFalse(result);
 			}
 
@@ -128,7 +128,7 @@ namespace ApiTester
 			foreach (string url in urls_working)
 			{
 				var api_url = new Api.MyUrl(url);
-				var result = api_url.is_UrlPing();
+				var result = api_url.Is_UrlPing();
 				Assert.IsTrue(result);
 			}
 
@@ -149,10 +149,10 @@ namespace ApiTester
 			var url = "https://grandechowhiskey.github.io/testJson.json";
 			var myDl = new Api.MyDownloader(url, full_path);
 
-			var result = myDl.download();
+			var result = myDl.Download();
 
 			myDl.Close();
-			System.IO.File.Delete(myDl.Path);
+			myDl.Remove();
 
 			Assert.AreEqual(true, result);
 		}
@@ -164,10 +164,10 @@ namespace ApiTester
 			var url = "https://grandechowhiskey.github.io/testJson.jsons";
 			var myDl = new Api.MyDownloader(url, full_path);
 
-			var result = myDl.download();
+			var result = myDl.Download();
 
 			myDl.Close();
-			System.IO.File.Delete(myDl.Path);
+			myDl.Remove();
 
 			Assert.AreEqual(false, result);
 		}
@@ -179,7 +179,7 @@ namespace ApiTester
 			var url = "https://grandechowhiskey.github.io/testJson.json";
 			var myDl = new Api.MyDownloader(url, full_path);
 
-			var result = myDl.download();
+			var result = myDl.Download();
 
 			myDl.Close();
 
@@ -213,6 +213,7 @@ namespace ApiTester
 			var result = myDl.Connected;
 
 			myDl.Close();
+			myDl.Remove();
 
 			Assert.AreEqual(false, result);
 		}
@@ -232,7 +233,7 @@ namespace ApiTester
 			var url = "https://grandechowhiskey.github.io/testJson.json";
 			var name = "test.json";
 
-			Api.Controller.checkAndDownload(url, path, name);
+			Api.Controller.CheckAndDownload(url, path, name);
 
 			try
             {
@@ -275,8 +276,8 @@ namespace ApiTester
 			var url1 = "https://testsite.io/test.json";
 			var url2 = "https://testsite.io/test.jsn";
 
-			var result1 = Api.Controller.getName(url);
-			var result2 = Api.Controller.getName(url);
+			var result1 = Api.Controller.GetName(url1);
+			var result2 = Api.Controller.GetName(url2);
 
 			Assert.IsNotNull(result1);
 			Assert.IsNull(result2);

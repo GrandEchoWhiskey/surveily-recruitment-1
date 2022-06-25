@@ -7,8 +7,8 @@ namespace Api
 {
 	public class MyDownloader
 	{
-		private string _url;
-		private string _path;
+		private readonly string _url;
+		private readonly string _path;
 		private HttpWebResponse _response;
 		private FileStream _fstream;
 
@@ -16,8 +16,8 @@ namespace Api
 		{
 			this._url = url;
 			this._path = full_path;
-			this.setup_Connection();
-			this.setup_File();
+			this.Setup_Connection();
+			this.Setup_File();
 		}
 
 		~MyDownloader()
@@ -27,11 +27,16 @@ namespace Api
 
 		public void Close()
         {
-			this.close_File();
-			this.close_Connection();
+			this.Close_File();
+			this.Close_Connection();
 		}
 
-		public bool download()
+		public void Remove()
+		{
+			File.Delete(this._path);
+		}
+
+		public bool Download()
         {
 			if (!this.Connected || !this.FileOpen)
 				return false;
@@ -76,7 +81,7 @@ namespace Api
 			
         }
 
-		private void setup_Connection()
+		private void Setup_Connection()
         {
 			try
 			{
@@ -86,7 +91,7 @@ namespace Api
 			catch (Exception) { }
 		}
 
-		private void setup_File()
+		private void Setup_File()
         {
             try
             {
@@ -95,7 +100,7 @@ namespace Api
 			catch (Exception) { }
         }
 
-		private void close_Connection()
+		private void Close_Connection()
         {
 			if (!this.Connected) return;
 			try
@@ -106,7 +111,7 @@ namespace Api
 			this._response = null;
 		}
 
-		private void close_File()
+		private void Close_File()
         {
 			if (!this.FileOpen) return;
 			try

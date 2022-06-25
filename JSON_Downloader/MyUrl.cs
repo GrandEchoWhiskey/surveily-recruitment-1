@@ -7,14 +7,14 @@ namespace Api
 	public class MyUrl
 	{
 
-		private string _url;
+		private readonly string _url;
 
 		public MyUrl(string url)
 		{
 			this._url = url;
 		}
 
-		public bool is_UrlIP()
+		public bool Is_UrlIP()
 		{
 			try
 			{
@@ -46,11 +46,11 @@ namespace Api
 			return false;
         }
 
-		public bool is_UrlPing()
+		public bool Is_UrlPing()
 		{
 
 			string address = this._url;
-			if (this.is_UrlInterface())
+			if (this.Is_UrlInterface())
             {
 				address = address.Split("://")[1];
             }
@@ -73,7 +73,7 @@ namespace Api
 			return false;
 		}
 
-		public bool is_UrlInterface()
+		public bool Is_UrlInterface()
 		{
             try
             {
