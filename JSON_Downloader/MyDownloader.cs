@@ -33,7 +33,11 @@ namespace Api
 
 		public void Remove()
 		{
-			File.Delete(this._path);
+            try
+            {
+				File.Delete(this._path);
+            }
+			catch (Exception) { }
 		}
 
 		public bool Download()
