@@ -13,6 +13,37 @@ Zaprojektowane klasy i testy jednostkowe.
 - Pobranie danych,
 - Zapis pobranych danych w folderze docelowym.
 
+#### Wejście:
+Do programu użytkownik wprowadza 3 wartości:
+- Ciąg znaków reprezentujący adresy url źródeł oddzielonych średnikiem (możliwość uruchomienia z argumentem)
+- Ciąg znaków reprezentujący ścieżkę zapisu
+- Znak odpowiadający, czy dany plik ma przybrać orginalną nazwę
+```csharp
+string urls;
+if (args.Length == 2)
+{
+  urls = args[1];
+}
+else
+{
+  Console.Write("Wpisz adresy URL oddzielone średnikiem: ");
+  urls = Console.ReadLine();
+}
+
+Console.Write("Wpisz ścieżkę zapisu: ");
+string dir = Console.ReadLine();
+
+Console.Write("Używaj orginalnej nazwy pliku (t/n): ");
+bool orginal_names = Console.ReadLine() != "n";
+```
+
+#### Wyjście:
+Program tworzy pliki z danymi json pobranymi z adresów URL. Warunkiem są uprawnienia do folderu oraz prawidłowy i dostępny adres url z plikiem json.
+```csharp
+byte[] data_byte_array = new UTF8Encoding(true).GetBytes((StreamReader)stream_reader.ReadToEnd());
+(FileStram)this._fstream.Write(data_byte_array, 0, data_byte_array.Length);
+```
+
 #### Struktura klas:
 Klasy są przejrzyste, już po nazwach przychodzi na myśl - czym się zajmują.
 ```csharp
@@ -82,11 +113,4 @@ Istnieje również możliwość prostej zmiany nazwy pliku; domyślnie nazwa pli
 string name = getName(url);
 if (name == null || !use_real_file_name)
   name = "download_" + (i + 1).ToString() + ".json";
-```
-
-#### Działanie:
-Poniższy kod tworzy kopię danych ze strony internetowej i zapisuje w podanym pliku. Użyłem metody (StreamReader)ReadToEnd(), która na chwilę przechowuje wszystkie dane z danej strony w pamięci.
-```csharp
-byte[] data_byte_array = new UTF8Encoding(true).GetBytes(stream_reader.ReadToEnd());
-this._fstream.Write(data_byte_array, 0, data_byte_array.Length);
 ```
