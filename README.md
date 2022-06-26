@@ -56,7 +56,7 @@ namespace Api
 ```
 
 #### Optymalność pracy:
-Testy URL pozwalają na przyspieszenie wyeliminowania adresów które nie mogą posiadać pliku json. Jest to sprawdzane poprzez sprawdzenie poprawności interfejsu webowego, oraz sprawdzeniu czy nie jest to numeryczny adres url. Następnie sprawdzane jest łącze do tego adresu.
+Testy URL pozwalają na przyspieszenie wyeliminowania adresów które nie mogą posiadać pliku json. Jest to sprawdzane poprzez sprawdzenie poprawności interfejsu webowego, oraz sprawdzeniu czy jest to numeryczny adres url. Następnie sprawdzane jest łącze do podanej domeny.
 ```csharp
 public class MyUrl
 {
