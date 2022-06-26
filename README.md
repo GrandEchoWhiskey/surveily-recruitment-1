@@ -60,9 +60,9 @@ Testy URL pozwalają na przyspieszenie wyeliminowania adresów które nie mogą 
 ```csharp
 public class MyUrl
 {
-  public bool is_UrlInterface();
-  public bool is_UrlIP();
-  public bool is_UrlPing();
+  public bool Is_UrlInterface();
+  public bool Is_UrlIP();
+  public bool Is_UrlPing();
 }
 ```
 
@@ -76,15 +76,15 @@ Klasa MyDownloader otwiera `Stream` do `Response` strony sieciowej, oraz do plik
 
 public void Close()
 {
-  this.close_File();
-  this.close_Connection();
+  this.Close_File();
+  this.Close_Connection();
 }
 ```
 
 #### Wydajność:
 Do projektu użyłem pracę w wątkach, co może znacznie przyspieszyć pobieranie. Nie są zapisywane po kolei(szeregowo), lecz równolegle. Dzięki takiemu rozwiązaniu inne pliki nie muszą czekać w kolejce do pobrania, gdy jeden z adresów nie odpowiada.
 ```csharp
-ThreadStart thread_start = new (() => checkAndDownload(url, path, name));
+ThreadStart thread_start = new (() => CheckAndDownload(url, path, name));
 Thread thread = new (thread_start)
 {
   Name = name,
@@ -110,7 +110,7 @@ else
 ```
 Istnieje również możliwość prostej zmiany nazwy pliku; domyślnie nazwa pliku jest taka sama jak nazwa pliku z URL, jednak wystarczy inaczej wywołać metodę aby pliki zapisywane były w postaci "download_{index}.json".
 ```csharp
-string name = getName(url);
+string name = GetName(url);
 if (name == null || !use_real_file_name)
   name = "download_" + (i + 1).ToString() + ".json";
 ```
