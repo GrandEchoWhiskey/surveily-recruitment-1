@@ -9,6 +9,7 @@ namespace Api
 	{
 		private readonly string _url;
 		private readonly string _path;
+		private readonly bool _already_exist;
 		private HttpWebResponse _response;
 		private FileStream _fstream;
 
@@ -16,6 +17,7 @@ namespace Api
 		{
 			this._url = url;
 			this._path = full_path;
+			this._already_exist = checkIfExist(full_path);
 			this.Setup_Connection();
 			this.Setup_File();
 		}
@@ -42,7 +44,7 @@ namespace Api
 
 		public bool Download()
         {
-			if (!this.Connected || !this.FileOpen)
+			if (!this.Connected || !this.FileOpen || this._already_exist)
 				return false;
 
 			Stream response_stream;
@@ -83,6 +85,11 @@ namespace Api
 			response_stream.Close();
 			return true;
 			
+        }
+
+		private bool checkIfExist(string path)
+        {
+			return File.Exists(path);
         }
 
 		private void Setup_Connection()
